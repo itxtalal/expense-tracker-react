@@ -64,15 +64,15 @@ const ExpenseForm = (props) => {
 
     const expenseData = {
       title: enteredTitle,
-      amount: enteredAmount,
+      amount: +enteredAmount,
       date: new Date(enteredDate),
     };
 
-    console.log(expenseData);
     props.onSaveExpenseData(expenseData);
     setEnteredTitle("");
     setEnteredAmount("");
     setEnteredDate("");
+    props.toggleEditingState();
   };
 
   return (
@@ -85,6 +85,7 @@ const ExpenseForm = (props) => {
             value={enteredTitle}
             type="text"
             onChange={titleChangeHandler}
+            required
           />
         </div>
         <div className="new-expense__control">
@@ -96,6 +97,7 @@ const ExpenseForm = (props) => {
             min="0.01"
             step="0.01"
             onChange={amountChangeHandler}
+            required
           />
         </div>
         <div className="new-expense__control">
@@ -104,13 +106,22 @@ const ExpenseForm = (props) => {
             id="date"
             value={enteredDate}
             type="date"
-            min="2021-01-01"
+            min="2019-01-01"
             max="2022-12-31"
             onChange={dateChangeHandler}
+            required
           />
         </div>
       </div>
       <div className="new-expense__actions">
+        <button
+          type="button"
+          onClick={() => {
+            props.toggleEditingState();
+          }}
+        >
+          Cancel
+        </button>
         <button type="submit">Add Expense</button>
       </div>
     </form>
